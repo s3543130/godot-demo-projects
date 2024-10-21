@@ -1,9 +1,9 @@
 using Godot;
 
-public partial class Player : Area2D
+public partial class 玩家Player : Area2D
 {
     [Signal]
-    public delegate void HitEventHandler();
+    public delegate void 命中HitEventHandler();
 
     [Export]
     public int Speed { get; set; } = 400; // How fast the player will move (pixels/sec).
@@ -80,8 +80,8 @@ public partial class Player : Area2D
 
     public void OnBodyEntered(PhysicsBody2D body)
     {
-        Hide(); // Player disappears after being hit.
-        EmitSignal(SignalName.Hit);
+        Hide(); // 玩家Player disappears after being hit.
+        EmitSignal(SignalName.命中Hit);
         // Must be deferred as we can't change physics properties on a physics callback.
         GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
     }
