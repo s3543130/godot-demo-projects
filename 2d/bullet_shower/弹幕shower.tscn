@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://c78by7hc4fmwx"]
+
+[ext_resource type="Script" path="res://子弹bullets.gd" id="1_oe7it"]
+[ext_resource type="Script" path="res://玩家player.gd" id="2_nww8n"]
+[ext_resource type="Texture2D" uid="uid://d3u7k0742d5ug" path="res://笑脸face_happy.png" id="3_fhjhk"]
+[ext_resource type="Texture2D" uid="uid://8j32onnr4qo3" path="res://哭脸face_sad.png" id="4_bo421"]
+
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fhjhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_bo421")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 27.0
+
+[node name="弹幕Shower" type="Node2D"]
+
+[node name="子弹Bullets" type="Node2D" parent="."]
+script = ExtResource("1_oe7it")
+
+[node name="玩家Player" type="Area2D" parent="."]
+script = ExtResource("2_nww8n")
+
+[node name="动画精灵AnimatedSprite2D" type="AnimatedSprite2D" parent="玩家Player"]
+sprite_frames = SubResource("1")
+
+[node name="碰撞形状CollisionShape2D" type="CollisionShape2D" parent="玩家Player"]
+position = Vector2(1, 0)
+shape = SubResource("2")
+
+[connection signal="body_shape_entered" from="玩家Player" to="玩家Player" method="_on_body_shape_entered"]
+[connection signal="body_shape_exited" from="玩家Player" to="玩家Player" method="_on_body_shape_exited"]
