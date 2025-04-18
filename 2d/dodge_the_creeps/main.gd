@@ -1,29 +1,29 @@
 extends Node
 
-@export var mob_scene_敌人计数: PackedScene = preload("res://Mob.tscn")
-var score_分数
+@export var mob_scene: PackedScene
+var score
 
-func _on_game_over_游戏结束():
-	$ScoreTimer_分数计时器.stop()
-	$MobTimer_敌人计时器.stop()
+func game_over():
+	$ScoreTimer.stop()
+	$MobTimer.stop()
 	$HUD.show_game_over()
-	$Music_音乐.stop()
-	$DeathSound_音效.play()
+	$Music.stop()
+	$DeathSound.play()
 
 
-func _on_new_game_新游戏():
+func new_game():
 	get_tree().call_group(&"mobs", &"queue_free")
-	score_分数 = 0
+	score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-	$HUD.update_score(score_分数)
+	$HUD.update_score(score)
 	$HUD.show_message("Get Ready")
-	$Music_音乐.play()
+	$Music.play()
 
 
-func _on_MobTimer_timeout_敌人计时器超时():
+func _on_MobTimer_timeout():
 	# Create a new instance of the Mob scene.
-	var mob = mob_scene_敌人计数.instantiate()
+	var mob = mob_scene.instantiate()
 
 	# Choose a random location on Path2D.
 	var mob_spawn_location = get_node(^"MobPath/MobSpawnLocation")
@@ -46,11 +46,11 @@ func _on_MobTimer_timeout_敌人计时器超时():
 	# Spawn the mob by adding it to the Main scene.
 	add_child(mob)
 
-func _on_ScoreTimer_timeout_分数计时器超时():
-	score_分数 += 1
-	$HUD.update_score(score_分数)
+func _on_ScoreTimer_timeout():
+	score += 1
+	$HUD.update_score(score)
 
 
-func _on_StartTimer_timeout_启动计时器超时():
-	$MobTimer_敌人计时器.start()
-	$ScoreTimer_分数计时器.start()
+func _on_StartTimer_timeout():
+	$MobTimer.start()
+	$ScoreTimer.start()
