@@ -37,7 +37,7 @@ func _process(delta):
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	elif velocity.y != 0:
 		$AnimatedSprite2D.animation = &"up"
-		rotation = PI if velocity.y > 0 else 0
+		rotation = PI if velocity.y > 0.0 else 0.0
 
 
 func start(pos):
@@ -47,7 +47,7 @@ func start(pos):
 	$CollisionShape2D.disabled = false
 
 
-func _on_body_entered(_body):
+func _on_body_entered_身体进入(_body):
 	hide() # Player disappears after being hit.
 	hit.emit()
 	# Must be deferred as we can't change physics properties on a physics callback.

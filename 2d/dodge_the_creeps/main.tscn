@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyfwty2q3rdse"]
+[gd_scene load_steps=7 format=3 uid="uid://cyfwty2q3rdse"]
 
 [ext_resource type="Script" uid="uid://bi0dtjbbi0wxj" path="res://main.gd" id="1_0r6n5"]
-[ext_resource type="PackedScene" uid="uid://rkdnhqgf2hpj" path="res://mob.tscn" id="2_50pww"]
 [ext_resource type="PackedScene" uid="uid://4vwrqjegqwpj" path="res://player.tscn" id="3_veqnc"]
 [ext_resource type="PackedScene" uid="uid://ccqoreueuxdb7" path="res://hud.tscn" id="4_0qnje"]
 [ext_resource type="AudioStream" uid="uid://q2pf4fr8d0ks" path="res://art/House In a Forest Loop.ogg" id="5_55d8h"]
@@ -15,7 +14,6 @@ point_count = 5
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0r6n5")
-mob_scene = ExtResource("2_50pww")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -27,10 +25,10 @@ color = Color(0.219608, 0.372549, 0.380392, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_veqnc")]
 
-[node name="MobTimer" type="Timer" parent="."]
+[node name="MobTimer_敌人计时器" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="ScoreTimer" type="Timer" parent="."]
+[node name="ScoreTimer_分数计时器" type="Timer" parent="."]
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -46,14 +44,14 @@ curve = SubResource("1")
 
 [node name="HUD" parent="." instance=ExtResource("4_0qnje")]
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
+[node name="Music_音乐" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_55d8h")
 
-[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+[node name="DeathSound_音效" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hp1r0")
 
-[connection signal="hit" from="Player" to="." method="game_over"]
-[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
-[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
-[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="hit" from="Player" to="." method="_on_game_over_游戏结束"]
+[connection signal="timeout" from="MobTimer_敌人计时器" to="." method="_on_MobTimer_timeout_敌人计时器超时"]
+[connection signal="timeout" from="ScoreTimer_分数计时器" to="." method="_on_StartTimer_timeout_启动计时器超时"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout_启动计时器超时"]
+[connection signal="start_game" from="HUD" to="." method="_on_new_game_新游戏"]
